@@ -38,6 +38,7 @@ typedef enum
 
 class Figura
 {
+
 };
 
 
