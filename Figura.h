@@ -1,6 +1,17 @@
-#ifndef FIGURA_H
+﻿#ifndef FIGURA_H
 #define FIGURA_H
 
+///EXPLICACIÓN
+/*
+- Ha de servir per poder gestionar figures que van caient.
+- Ha de poder guardar tota la informació necessària per gestionar la caiguda de la figura: tipus i
+  color de la figura, posició actual, forma actual de la figura.
+- Ha de tenir mètodes que permetin fer el moviment i el gir de la figura i la interacció amb el tauler:
+▪ Desplaçar-se lateralment
+▪ Baixar dins del tauler
+▪ Girar
+▪ Recuperar la forma actual de la figura
+*/
 typedef enum
 {
     COLOR_NEGRE = 0,
@@ -29,7 +40,8 @@ typedef enum
 
 const int MAX_ALCADA = 4;
 const int MAX_AMPLADA = 4;
-
+const int MAX_FIGURES = 8;
+const int FORMA_ACTUAL_FIGURA = 4;
 typedef enum
 {
     GIR_HORARI = 0,
@@ -38,6 +50,19 @@ typedef enum
 
 class Figura
 {
+private:
+    int m_formaFigura[FORMA_ACTUAL_FIGURA];
+    int m_tipusFigura[MAX_FIGURES];
+    int m_tipusGir[];
+
+public:
+    Figura();
+    Figura(const int& alcada, const int& amplada, const int& formaActual);
+    void desplacarFigura();
+    void baixarFigura();
+    void girarFigura();
+    void setFormaFigura(const int formaFigura[FORMA_ACTUAL_FIGURA]);
+    void setTipusFigura(const int tipusFigura[MAX_FIGURES]);
 
 };
 
