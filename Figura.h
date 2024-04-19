@@ -25,6 +25,7 @@ typedef enum
     NO_COLOR
 } ColorFigura;
 
+/// AÑADIR CLASE COLISIONA 
 
 typedef enum
 {
@@ -51,17 +52,15 @@ typedef enum
 class Figura
 {
 private:
-    int m_formaFigura[FORMA_ACTUAL_FIGURA];
-    int m_tipusFigura[MAX_FIGURES];
-    int m_tipusGir[];
-
+    int m_colorFigura;
+    int m_matrizFigura[MAX_ALCADA][MAX_AMPLADA];
+    //ñ Tiene que guardar esta información: tipus, fila, columna y gir
 public:
-    Figura();
-    Figura(const int& alcada, const int& amplada, const int& formaActual);
+
+    void setMatrizFigura(const TipusFigura& fifi);
     void desplacarFigura();
     void baixarFigura();
-    void girarFigura();
-    void setFormaFigura(const int formaFigura[FORMA_ACTUAL_FIGURA]);
+    void girarFigura(int matrizFigura[MAX_ALCADA][MAX_AMPLADA], const DireccioGir& gir);
     void setTipusFigura(const int tipusFigura[MAX_FIGURES]);
 
 };
