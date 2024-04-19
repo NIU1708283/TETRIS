@@ -14,7 +14,13 @@ void Figura::setMatrizFigura(const TipusFigura& fifi)
 				m_matrizFigura[i][j] = FIGURA_O;
 		break;
 	case 2:
-		// tatata
+		for (int i = 0; i < 4; i++)
+			for (int j = 0; j < 4; j++)
+				if (i==1)
+				{
+					m_matrizFigura[i][j] = FIGURA_I;
+				}
+				else{NO_FIGURA}
 		break;
 	case 3:
 		// tatata
