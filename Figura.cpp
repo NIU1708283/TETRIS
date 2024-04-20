@@ -14,7 +14,6 @@ void Figura::setMatrizFigura(const TipusFigura& fifi)
 				m_matrizFigura[i][j] = FIGURA_O;
 	case 2:
 		for (int i = 0; i < 4; i++)
-<<<<<<< HEAD
 		{
 			for (int j = 0; j < 4; j++)
 				if (i == 1)
@@ -24,14 +23,6 @@ void Figura::setMatrizFigura(const TipusFigura& fifi)
 				else
 					m_matrizFigura[i][j] = NO_FIGURA;
 		}
-=======
-			for (int j = 0; j < 4; j++)
-				if (i==1)
-				{
-					m_matrizFigura[i][j] = FIGURA_I;
-				}
-				else{NO_FIGURA}
->>>>>>> cd24d899250e4d5f81a4617d49a4066e9342b3d2
 		break;
 	case 3:
 		for (int i = 0; i < 3; i++)
