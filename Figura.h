@@ -25,7 +25,6 @@ typedef enum
     NO_COLOR
 } ColorFigura;
 
-/// AÑADIR CLASE COLISIONA 
 
 typedef enum
 {
@@ -54,15 +53,17 @@ class Figura
 private:
     int m_colorFigura;
     int m_matrizFigura[MAX_ALCADA][MAX_AMPLADA];
+    int posicionActualCentro[MAX_ALCADA][MAX_AMPLADA]; // FILA Y COLUMNA DE LA POSICION DEL CENTRO
     //ñ Tiene que guardar esta información: tipus, fila, columna y gir
+
 public:
 
     void setMatrizFigura(const TipusFigura& fifi);
-    void desplacarFigura();
-    void baixarFigura();
+    void desplacarFigura(); // mover de izquierda a derecha con el teclado
+    void baixarFigura(); // mover todo abajo, tanto por defecto como con el teclado
     void girarFigura(int matrizFigura[MAX_ALCADA][MAX_AMPLADA], const DireccioGir& gir);
     void setTipusFigura(const int tipusFigura[MAX_FIGURES]);
-
+    // recuperar la forma actual de la figura
 };
 
 

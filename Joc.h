@@ -17,7 +17,7 @@ public:
 
 private:
 	Tauler tauler;
-	Figura proximaFigura;
+	//Figura proximaFigura;
 };
 
 #endif
