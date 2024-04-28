@@ -20,9 +20,6 @@ bool Tauler::girValid()
 
 	return false;
 }
-{
-	return false;
-}
 
 bool Tauler::movimentValid()
 {

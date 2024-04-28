@@ -1,7 +1,7 @@
 #include "Figura.h"
 
 
-void Figura::setMatrizFigura(const TipusFigura& fifi)
+void Figura::inicialitzaMatrizFigura(const TipusFigura& fifi, const int& x, const int& y) //ñ se debe pasar la posición de la figura dentro del tablero
 {
 	switch (fifi)
 	{
@@ -156,20 +156,21 @@ void Figura::setMatrizFigura(const TipusFigura& fifi)
 	}
 }
 
-void Figura::desplacarFigura()
+void Figura::desplacarFigura(int& x, int& y)
 {
 	
 }
 
-void Figura::baixarFigura()
+void Figura::baixarFigura(int& x, int& y)
 {
 
 }
 
 void Figura::girarFigura(int matrizFigura[MAX_ALCADA][MAX_AMPLADA], const DireccioGir& gir)
 {
-	int nuevaMatriz[3][3];
+	// gira la figura en sentit horari o antihorari dintre de la seva matriu
 
+	int nuevaMatriz[3][3];
 
 	if (gir == 0)
 	{
@@ -190,7 +191,7 @@ void Figura::girarFigura(int matrizFigura[MAX_ALCADA][MAX_AMPLADA], const Direcc
 	{
 
 		for (int i = 0; i < 3; ++i) {
-			for (int j = 0; j < 3; ++j) {
+			for (int j = 0; j < 3; ++j) {  
 				nuevaMatriz[2 - j][i] = matrizFigura[i][j];
 			}
 		}
@@ -203,7 +204,9 @@ void Figura::girarFigura(int matrizFigura[MAX_ALCADA][MAX_AMPLADA], const Direcc
 	}
 }
 
-void Figura::setTipusFigura(const int tipusFigura[MAX_FIGURES])
+void Figura::setMatrizFigura(int matrizFigura[MAX_ALCADA][MAX_AMPLADA], const int& x, const int& y)
 {
 
 }
+
+

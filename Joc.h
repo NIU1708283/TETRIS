@@ -12,7 +12,7 @@ public:
 	void inicialitza(const string& nomFitxer);
 	bool giraFigura(DireccioGir direccio);
 	bool mouFigura(int dirX);
-	int baixaFigura();
+	int baixaFigura(); 
 	void escriuTauler(const string& nomFitxer);
 
 private:
