@@ -64,8 +64,8 @@ private:
 public:
 
     void inicialitzaMatrizFigura(const TipusFigura& fifi);
-    void desplacarFigura(int& x); // mover de izquierda a derecha con el teclado
-    void baixarFigura(int& y); // mover todo abajo, tanto por defecto como con el teclado
+    void desplacarFigura(char& move); // mover la figura a la derecha o a la izquierda
+    void baixarFigura(char& move); // mover todo abajo, tanto por defecto como con el teclado
     void girarFigura(const TipusFigura& tipusFigura, const DireccioGir& gir, const int& x, const int& y); // girar la figura
     void setMatrizFigura(const TipusFigura& tipusFigura, const int& x, const int& y);
     // recuperar la forma actual de la figura
