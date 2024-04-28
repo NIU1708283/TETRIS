@@ -51,22 +51,22 @@ typedef enum
 class Figura
 {
 private:
-    int m_posX;
-    int m_posY;
-    int m_colorFigura;
+    ColorFigura m_colorFigura;
+    TipusFigura m_tipusFigura;
+    DireccioGir m_gir;
+    int m_girFigura;
+    int m_X;
+    int m_Y;
     int m_matrizFigura[MAX_ALCADA][MAX_AMPLADA];
-    int m_tipusFigura;
-    //ñ Tiene que guardar esta información: tipus, fila, columna y gir
-    d
+    int m_formaActualFigura[FORMA_ACTUAL_FIGURA][FORMA_ACTUAL_FIGURA];
+
+    //ñ Tiene que guardar esta información: tipus, fila, columna y gir hola 
 public:
 
-    void inicialitzaMatrizFigura(const TipusFigura& fifi, const int& x, const int& y);
-    void desplacarFigura(int& x, int& y); // mover de izquierda a derecha con el teclado
-    void baixarFigura(int& x, int& y); // mover todo abajo, tanto por defecto como con el teclado
-    void girarFigura(const int& tipusFigura, const DireccioGir& gir, const int& x, const int& y); // girar la figura
-    void setMatrizFigura(const int& tipusFigura, const int& x, const int& y);
+    void inicialitzaMatrizFigura(const TipusFigura& fifi);
+    void desplacarFigura(int& x); // mover de izquierda a derecha con el teclado
+    void baixarFigura(int& y); // mover todo abajo, tanto por defecto como con el teclado
+    void girarFigura(const TipusFigura& tipusFigura, const DireccioGir& gir, const int& x, const int& y); // girar la figura
+    void setMatrizFigura(const TipusFigura& tipusFigura, const int& x, const int& y);
     // recuperar la forma actual de la figura
 };
-
-
-#endif

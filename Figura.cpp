@@ -1,17 +1,26 @@
 #include "Figura.h"
 
 
-void Figura::inicialitzaMatrizFigura(const TipusFigura& fifi, const int& x, const int& y) //ñ se debe pasar la posición de la figura dentro del tablero
+void Figura::inicialitzaMatrizFigura(const TipusFigura& fifi) //Ã± se debe pasar la posiciÃ³n de la figura dentro del tablero
 {
+	// inicialitza la matriu de la figura segons el tipus de figura
+	m_girFigura = 0;
 	switch (fifi)
 	{
 	case 0:
 		// tatata
 		break;
 	case 1:
+		
 		for (int i = 0; i < 2; i++)
 			for (int j = 0; j < 2; j++)
 				m_matrizFigura[i][j] = FIGURA_O;
+		for (int i = 2; i < 4; i++)
+			for (int j = 2; j < 4; j++)
+				m_matrizFigura[i][j] = NO_FIGURA;
+		m_X = 0;
+		m_Y = 1;
+		break;
 	case 2:
 		for (int i = 0; i < 4; i++)
 		{
@@ -23,6 +32,8 @@ void Figura::inicialitzaMatrizFigura(const TipusFigura& fifi, const int& x, cons
 				else
 					m_matrizFigura[i][j] = NO_FIGURA;
 		}
+		m_X = 2;
+		m_Y = 1;
 		break;
 	case 3:
 		for (int i = 0; i < 3; i++)
@@ -46,7 +57,11 @@ void Figura::inicialitzaMatrizFigura(const TipusFigura& fifi, const int& x, cons
 					m_matrizFigura[i][j] = NO_FIGURA;
 			}
 		}
-	
+		for (int i = 3; i < 4; i++)
+			for (int j = 3; j < 4; j++)
+				m_matrizFigura[i][j] = NO_FIGURA;
+		m_X = 1;
+		m_Y = 1;
 		break;
 	case 4:
 		for (int i = 0; i < 3; i++)
@@ -70,6 +85,11 @@ void Figura::inicialitzaMatrizFigura(const TipusFigura& fifi, const int& x, cons
 					m_matrizFigura[i][j] = NO_FIGURA;
 			}
 		}
+		for (int i = 3; i < 4; i++)
+			for (int j = 3; j < 4; j++)
+				m_matrizFigura[i][j] = NO_FIGURA;
+		m_X = 1;
+		m_Y = 1;
 		break;
 	case 5:
 		for (int i = 0; i < 3; i++)
@@ -93,6 +113,11 @@ void Figura::inicialitzaMatrizFigura(const TipusFigura& fifi, const int& x, cons
 					m_matrizFigura[i][j] = NO_FIGURA;
 			}
 		}
+		for (int i = 3; i < 4; i++)
+			for (int j = 3; j < 4; j++)
+				m_matrizFigura[i][j] = NO_FIGURA;
+		m_X = 1;
+		m_Y = 1;
 		break;
 	case 6: //z
 		for (int i = 0; i < 3; i++)
@@ -121,6 +146,11 @@ void Figura::inicialitzaMatrizFigura(const TipusFigura& fifi, const int& x, cons
 					m_matrizFigura[i][j] = NO_FIGURA;
 			}
 		}
+		for (int i = 3; i < 4; i++)
+			for (int j = 3; j < 4; j++)
+				m_matrizFigura[i][j] = NO_FIGURA;
+		m_X = 1;
+		m_Y = 1;
 		break;
 	case 7: //s
 		for (int i = 0; i < 3; i++)
@@ -149,6 +179,11 @@ void Figura::inicialitzaMatrizFigura(const TipusFigura& fifi, const int& x, cons
 					m_matrizFigura[i][j] = NO_FIGURA;
 			}
 		}
+		for (int i = 3; i < 4; i++)
+			for (int j = 3; j < 4; j++)
+				m_matrizFigura[i][j] = NO_FIGURA;
+		m_X = 1;
+		m_Y = 1;
 		break;
 
 	default:
