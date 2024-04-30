@@ -1,7 +1,7 @@
 #include "Figura.h"
 
 
-void Figura::inicialitzaMatrizFigura(const TipusFigura& fifi, const int& x, const int& y) //ñ se debe pasar la posición de la figura dentro del tablero
+void Figura::inicialitzaMatrizFigura(const TipusFigura& fifi) //ñ se debe pasar la posición de la figura dentro del tablero
 {
 	switch (fifi)
 	{

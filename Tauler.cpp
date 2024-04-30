@@ -48,6 +48,7 @@ int Tauler::comprovaFiles()
 		else
 			i--;
 	}
+	
 
 	return n;
 }
