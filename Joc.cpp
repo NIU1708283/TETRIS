@@ -1,30 +1,260 @@
-#include "Joc.h"
+#include "Figura.h"
 
-void Joc::inicialitza(const string& nomFitxer)
+
+void Figura::inicialitzaMatrizFigura(const TipusFigura& fifi) //√± se debe pasar la posici√≥n de la figura dentro del tablero
 {
-	// inicializa el tablero con las figuras correspondientes 
-	// deja preparada la proxima figura que aparecer· dentro del tablero
+	// inicialitza la matriu de la figura segons el tipus de figura
+	m_girFigura = 0;
+	switch (fifi)
+	{
+	case 0:
+		// tatata
+		break;
+	case 1:
+		
+		for (int i = 0; i < 2; i++)
+			for (int j = 0; j < 2; j++)
+				m_matrizFigura[i][j] = FIGURA_O;
+		for (int i = 2; i < 4; i++)
+			for (int j = 2; j < 4; j++)
+				m_matrizFigura[i][j] = NO_FIGURA;
+		m_X = 0;
+		m_Y = 1;
+		break;
+	case 2:
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 4; j++)
+				if (i == 1)
+				{
+					m_matrizFigura[i][j] = FIGURA_I;
+				}
+				else
+					m_matrizFigura[i][j] = NO_FIGURA;
+		}
+		m_X = 2;
+		m_Y = 1;
+		break;
+	case 3:
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				if (i == 0)
+				{
+					if (j % 2 != 0)
+					{
+						m_matrizFigura[i][j] = FIGURA_T;
+					}
+					else
+						m_matrizFigura[i][j] = NO_FIGURA;
+				}
+				if (i == 1)
+				{
+					m_matrizFigura[i][j] = FIGURA_T;
+				}
+				else
+					m_matrizFigura[i][j] = NO_FIGURA;
+			}
+		}
+		for (int i = 3; i < 4; i++)
+			for (int j = 3; j < 4; j++)
+				m_matrizFigura[i][j] = NO_FIGURA;
+		m_X = 1;
+		m_Y = 1;
+		break;
+	case 4:
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				if (i == 0)
+				{
+					if (j == 2)
+					{
+						m_matrizFigura[i][j] = FIGURA_L;
+					}
+					else
+						m_matrizFigura[i][j] = NO_FIGURA;
+				}
+				if (i == 1)
+				{
+					m_matrizFigura[i][j] = FIGURA_L;
+				}
+				else
+					m_matrizFigura[i][j] = NO_FIGURA;
+			}
+		}
+		for (int i = 3; i < 4; i++)
+			for (int j = 3; j < 4; j++)
+				m_matrizFigura[i][j] = NO_FIGURA;
+		m_X = 1;
+		m_Y = 1;
+		break;
+	case 5:
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				if (i == 0)
+				{
+					if (j == 0)
+					{
+						m_matrizFigura[i][j] = FIGURA_J;
+					}
+					else
+						m_matrizFigura[i][j] = NO_FIGURA;
+				}
+				if (i == 1)
+				{
+					m_matrizFigura[i][j] = FIGURA_J;
+				}
+				else
+					m_matrizFigura[i][j] = NO_FIGURA;
+			}
+		}
+		for (int i = 3; i < 4; i++)
+			for (int j = 3; j < 4; j++)
+				m_matrizFigura[i][j] = NO_FIGURA;
+		m_X = 1;
+		m_Y = 1;
+		break;
+	case 6: //z
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				if (i == 0)
+				{
+					if (j < 2)
+					{
+						m_matrizFigura[i][j] = FIGURA_Z;
+					}
+					else
+						m_matrizFigura[i][j] = NO_FIGURA;
+				}
+				if (i == 1)
+				{
+					if (j > 0)
+					{
+						m_matrizFigura[i][j] = FIGURA_Z;
+					}
+					else
+						m_matrizFigura[i][j] = NO_FIGURA;
+				}
+				else
+					m_matrizFigura[i][j] = NO_FIGURA;
+			}
+		}
+		for (int i = 3; i < 4; i++)
+			for (int j = 3; j < 4; j++)
+				m_matrizFigura[i][j] = NO_FIGURA;
+		m_X = 1;
+		m_Y = 1;
+		break;
+	case 7: //s
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				if (i == 0)
+				{
+					if (j > 0)
+					{
+						m_matrizFigura[i][j] = FIGURA_S;
+					}
+					else
+						m_matrizFigura[i][j] = NO_FIGURA;
+				}
+				if (i == 1)
+				{
+					if (j < 2)
+					{
+						m_matrizFigura[i][j] = FIGURA_S;
+					}
+					else
+						m_matrizFigura[i][j] = NO_FIGURA;
+				}
+				else
+					m_matrizFigura[i][j] = NO_FIGURA;
+			}
+		}
+		for (int i = 3; i < 4; i++)
+			for (int j = 3; j < 4; j++)
+				m_matrizFigura[i][j] = NO_FIGURA;
+		m_X = 1;
+		m_Y = 1;
+		break;
+
+	default:
+		break;
+	}
 }
 
-bool Joc::giraFigura(DireccioGir direccio)
+void Figura::desplacarFigura(char& move)
 {
-	// llama a la funciÛn girafigura y si es possible, la gira, sino, no hace nada
-	return false;
+	// despla√ßa la figura a la dreta o a l'esquerra
+	if (move == 'd')
+	{
+		m_X++;
+	}
+	else if (move == 'a')
+	{
+		m_X--;
+	}
+
 }
 
-bool Joc::mouFigura(int dirX)
+void Figura::baixarFigura(char& move)
 {
-	// llama a la funciÛn moverfigura y compueba si se puede mover, si se puede lo hace y sinÛ no hace nada
-	return false;
+	// despla√ßa la figura cap avall
+	if (move == 's' || move == '\0')
+	{
+		m_Y++;
+	}
 }
 
-int Joc::baixaFigura()
+void Figura::girarFigura(int matrizFigura[MAX_ALCADA][MAX_AMPLADA], const DireccioGir& gir)
 {
-	// llama a la funciÛn bajarfigura (que se debe poder bajar automaticamente o con las flechas verticales) y comprueba que sea un movimiento valido
-	return 0;
+	// gira la figura en sentit horari o antihorari dintre de la seva matriu
+
+	int nuevaMatriz[3][3];
+
+	if (gir == 0)
+	{
+
+		for (int i = 0; i < 3; ++i) {
+			for (int j = 0; j < 3; ++j) {
+				nuevaMatriz[j][2 - i] = matrizFigura[i][j];
+			}
+		}
+
+		for (int i = 0; i < 3; ++i) {
+			for (int j = 0; j < 3; ++j) {
+				matrizFigura[i][j] = nuevaMatriz[i][j];
+			}
+		}
+	}
+	else
+	{
+
+		for (int i = 0; i < 3; ++i) {
+			for (int j = 0; j < 3; ++j) {  
+				nuevaMatriz[2 - j][i] = matrizFigura[i][j];
+			}
+		}
+
+		for (int i = 0; i < 3; ++i) {
+			for (int j = 0; j < 3; ++j) {
+				matrizFigura[i][j] = nuevaMatriz[i][j];
+			}
+		}
+	}
 }
 
-void Joc::escriuTauler(const string& nomFitxer)
+void Figura::setMatrizFigura(int matrizFigura[MAX_ALCADA][MAX_AMPLADA], const int& x, const int& y)
 {
-	// guarda la informacion del tablero y la de la proxima figura en aparecer en Èl
+
 }
+
+

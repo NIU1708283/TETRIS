@@ -40,8 +40,7 @@ typedef enum
 
 const int MAX_ALCADA = 4;
 const int MAX_AMPLADA = 4;
-const int MAX_FIGURES = 8;
-const int FORMA_ACTUAL_FIGURA = 4;
+
 typedef enum
 {
     GIR_HORARI = 0,
@@ -51,25 +50,30 @@ typedef enum
 class Figura
 {
 private:
-    ColorFigura m_colorFigura;
-    TipusFigura m_tipusFigura;
-    DireccioGir m_gir;
-    int m_girFigura;
-    int m_X;
-    int m_Y;
-    int m_matrizFigura[MAX_ALCADA][MAX_AMPLADA];
-    int m_formaActualFigura[FORMA_ACTUAL_FIGURA][FORMA_ACTUAL_FIGURA];
+    ColorFigura m_color; // color de la figura
+    TipusFigura m_tipus; // tipus de la figura
+    
+    int m_X; // fila actual del centro de la figura
+    int m_Y; // columna actual del centro de la figura
+    int m_gir; // gir actual de la figura
+    int m_forma[MAX_ALCADA][MAX_AMPLADA]; // forma de la figura
 
-    //ñ Tiene que guardar esta información: tipus, fila, columna y gir hola 
+    //ñ Tiene que guardar esta información: tipus, fila, columna y gir
 public:
+    Figura();
+    Figura(const TipusFigura& fifi, const ColorFigura& color);
 
-    void inicialitzaMatrizFigura(const TipusFigura& fifi); // inicializar la matriz de la figura
-    void desplacarFigura(int& x); // mover de izquierda a derecha con el teclado
-    void baixarFigura(int& y); // mover todo abajo, tanto por defecto como con el teclado
-    void girarFigura(const TipusFigura& tipusFigura, const DireccioGir& gir, const int& x, const int& y); // girar la figura
-    void setMatrizFigura(const TipusFigura& tipusFigura, const int& x, const int& y);
-    // recuperar la forma actual de la figura
+    void moureFigura(const char& move); // mover la figura a la derecha o a la izquierda y abajo
+    void baixarFigura(); // mover la figura abajo por defecto
+    void girarFigura(const DireccioGir& gir); // girar la figura
+
+    void getForma(int forma[MAX_ALCADA][MAX_AMPLADA]) const;
+    // ya no estoy tan seguro de que haga falta un setter de forma, así que no lo pongo por ahora
+
+    TipusFigura getTipus() const { return m_tipus ; }
+    ColorFigura getColor() const { return m_color; }
+    int getPosX() const { return m_X; }
+    int getPosY() const { return m_Y; }
+    int getGir() const { return m_gir; }
+
 };
-
-
-#endif
