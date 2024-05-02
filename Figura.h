@@ -61,9 +61,9 @@ private:
     //ñ Tiene que guardar esta información: tipus, fila, columna y gir
 public:
     Figura();
-    Figura(const TipusFigura& fifi, const ColorFigura& color);
+    Figura(const TipusFigura& fifi);
 
-    void moureFigura(const char& move); // mover la figura a la derecha o a la izquierda y abajo
+    void moureFigura(const int& X, const int& Y); // mover la figura a la derecha o a la izquierda y abajo
     void baixarFigura(); // mover la figura abajo por defecto
     void girarFigura(const DireccioGir& gir); // girar la figura
 
@@ -72,8 +72,13 @@ public:
 
     TipusFigura getTipus() const { return m_tipus ; }
     ColorFigura getColor() const { return m_color; }
+    ColorFigura setColor(const ColorFigura& color) { m_color = color; }
     int getPosX() const { return m_X; }
     int getPosY() const { return m_Y; }
     int getGir() const { return m_gir; }
 
 };
+
+
+
+#endif

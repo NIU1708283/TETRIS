@@ -8,7 +8,6 @@ using namespace std;
 class Joc
 {
 public:
-	Joc() {}
 	void inicialitza(const string& nomFitxer);
 	bool giraFigura(DireccioGir direccio);
 	bool mouFigura(int dirX);
@@ -16,8 +15,10 @@ public:
 	void escriuTauler(const string& nomFitxer);
 
 private:
-	Tauler tauler;
-	//Figura proximaFigura;
+	Tauler m_tauler;
+	Figura m_figuraActual;
+	int m_puntuacio;
+	int m_nivell;
 };
 
 #endif

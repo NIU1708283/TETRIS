@@ -1,260 +1,126 @@
-#include "Figura.h"
+#include "Joc.h"
+#include <fstream>
 
-
-void Figura::inicialitzaMatrizFigura(const TipusFigura& fifi) //ñ se debe pasar la posición de la figura dentro del tablero
+void Joc::inicialitza(const string& nomFitxer)
 {
-	// inicialitza la matriu de la figura segons el tipus de figura
-	m_girFigura = 0;
-	switch (fifi)
-	{
-	case 0:
-		// tatata
-		break;
-	case 1:
-		
-		for (int i = 0; i < 2; i++)
-			for (int j = 0; j < 2; j++)
-				m_matrizFigura[i][j] = FIGURA_O;
-		for (int i = 2; i < 4; i++)
-			for (int j = 2; j < 4; j++)
-				m_matrizFigura[i][j] = NO_FIGURA;
-		m_X = 0;
-		m_Y = 1;
-		break;
-	case 2:
-		for (int i = 0; i < 4; i++)
-		{
-			for (int j = 0; j < 4; j++)
-				if (i == 1)
-				{
-					m_matrizFigura[i][j] = FIGURA_I;
-				}
-				else
-					m_matrizFigura[i][j] = NO_FIGURA;
-		}
-		m_X = 2;
-		m_Y = 1;
-		break;
-	case 3:
-		for (int i = 0; i < 3; i++)
-		{
-			for (int j = 0; j < 3; j++)
-			{
-				if (i == 0)
-				{
-					if (j % 2 != 0)
-					{
-						m_matrizFigura[i][j] = FIGURA_T;
-					}
-					else
-						m_matrizFigura[i][j] = NO_FIGURA;
-				}
-				if (i == 1)
-				{
-					m_matrizFigura[i][j] = FIGURA_T;
-				}
-				else
-					m_matrizFigura[i][j] = NO_FIGURA;
-			}
-		}
-		for (int i = 3; i < 4; i++)
-			for (int j = 3; j < 4; j++)
-				m_matrizFigura[i][j] = NO_FIGURA;
-		m_X = 1;
-		m_Y = 1;
-		break;
-	case 4:
-		for (int i = 0; i < 3; i++)
-		{
-			for (int j = 0; j < 3; j++)
-			{
-				if (i == 0)
-				{
-					if (j == 2)
-					{
-						m_matrizFigura[i][j] = FIGURA_L;
-					}
-					else
-						m_matrizFigura[i][j] = NO_FIGURA;
-				}
-				if (i == 1)
-				{
-					m_matrizFigura[i][j] = FIGURA_L;
-				}
-				else
-					m_matrizFigura[i][j] = NO_FIGURA;
-			}
-		}
-		for (int i = 3; i < 4; i++)
-			for (int j = 3; j < 4; j++)
-				m_matrizFigura[i][j] = NO_FIGURA;
-		m_X = 1;
-		m_Y = 1;
-		break;
-	case 5:
-		for (int i = 0; i < 3; i++)
-		{
-			for (int j = 0; j < 3; j++)
-			{
-				if (i == 0)
-				{
-					if (j == 0)
-					{
-						m_matrizFigura[i][j] = FIGURA_J;
-					}
-					else
-						m_matrizFigura[i][j] = NO_FIGURA;
-				}
-				if (i == 1)
-				{
-					m_matrizFigura[i][j] = FIGURA_J;
-				}
-				else
-					m_matrizFigura[i][j] = NO_FIGURA;
-			}
-		}
-		for (int i = 3; i < 4; i++)
-			for (int j = 3; j < 4; j++)
-				m_matrizFigura[i][j] = NO_FIGURA;
-		m_X = 1;
-		m_Y = 1;
-		break;
-	case 6: //z
-		for (int i = 0; i < 3; i++)
-		{
-			for (int j = 0; j < 3; j++)
-			{
-				if (i == 0)
-				{
-					if (j < 2)
-					{
-						m_matrizFigura[i][j] = FIGURA_Z;
-					}
-					else
-						m_matrizFigura[i][j] = NO_FIGURA;
-				}
-				if (i == 1)
-				{
-					if (j > 0)
-					{
-						m_matrizFigura[i][j] = FIGURA_Z;
-					}
-					else
-						m_matrizFigura[i][j] = NO_FIGURA;
-				}
-				else
-					m_matrizFigura[i][j] = NO_FIGURA;
-			}
-		}
-		for (int i = 3; i < 4; i++)
-			for (int j = 3; j < 4; j++)
-				m_matrizFigura[i][j] = NO_FIGURA;
-		m_X = 1;
-		m_Y = 1;
-		break;
-	case 7: //s
-		for (int i = 0; i < 3; i++)
-		{
-			for (int j = 0; j < 3; j++)
-			{
-				if (i == 0)
-				{
-					if (j > 0)
-					{
-						m_matrizFigura[i][j] = FIGURA_S;
-					}
-					else
-						m_matrizFigura[i][j] = NO_FIGURA;
-				}
-				if (i == 1)
-				{
-					if (j < 2)
-					{
-						m_matrizFigura[i][j] = FIGURA_S;
-					}
-					else
-						m_matrizFigura[i][j] = NO_FIGURA;
-				}
-				else
-					m_matrizFigura[i][j] = NO_FIGURA;
-			}
-		}
-		for (int i = 3; i < 4; i++)
-			for (int j = 3; j < 4; j++)
-				m_matrizFigura[i][j] = NO_FIGURA;
-		m_X = 1;
-		m_Y = 1;
-		break;
+    ifstream fitxer;
+    fitxer.open(nomFitxer);
+    if (fitxer.is_open())
+    {
+        while (!fitxer.eof())
+        {
+            int tipus, fila, columna, gir;
+            fitxer >> tipus >> fila >> columna >> gir;
 
-	default:
-		break;
-	}
+            m_figuraActual = Figura(static_cast<TipusFigura>(tipus)); // pasa de int a TipusFigura
+            for (int i = 0; i < gir; i++)
+            {
+                m_figuraActual.girarFigura(GIR_HORARI); // gira la figura a su posición correspondiente
+            }
+
+            m_tauler.inicialitzaTauler(); // inicializa el tablero todo a NO_COLOR
+            m_tauler.mouFigura(m_figuraActual, fila, columna); // mueve la figura a su posición correspondiente
+
+            for (int i = 0; i < MAX_FILA; i++)
+            {
+                for (int j = 0; j < MAX_COL; j++)
+                {
+                    int color;
+                    fitxer >> color;
+                    if (color != NO_COLOR) // lo hace solo si el espacio debe tener color, así se ahorra tiempo
+                    {
+                        m_tauler.setColorCasella(i, j, static_cast<ColorFigura>(color)); // pasa de int a ColorFigura
+                    }
+                }
+            }
+        }
+
+        fitxer.close();
+    }
 }
 
-void Figura::desplacarFigura(char& move)
+bool Joc::giraFigura(DireccioGir direccio)
 {
-	// desplaça la figura a la dreta o a l'esquerra
-	if (move == 'd')
-	{
-		m_X++;
-	}
-	else if (move == 'a')
-	{
-		m_X--;
-	}
-
+    Figura figuraGirada = m_figuraActual;
+    figuraGirada.girarFigura(direccio);
+    if (m_tauler.movimentValid(figuraGirada, figuraGirada.getPosX(), figuraGirada.getPosY()))
+    {
+        m_figuraActual = figuraGirada;
+        return true;
+    }
+    return false;
 }
 
-void Figura::baixarFigura(char& move)
+bool Joc::mouFigura(int dirX) // vale 1 si se mueve a la derecha y -1 si se mueve a la izquierda
 {
-	// desplaça la figura cap avall
-	if (move == 's' || move == '\0')
-	{
-		m_Y++;
-	}
+    Figura figuraMoguda = m_figuraActual;
+
+    m_tauler.mouFigura(figuraMoguda, 0, figuraMoguda.getPosY() + dirX);
+    if (m_tauler.movimentValid(figuraMoguda, figuraMoguda.getPosX(), figuraMoguda.getPosY()))
+    {
+        m_figuraActual = figuraMoguda;
+        return true;
+    }
+    return false;
 }
 
-void Figura::girarFigura(int matrizFigura[MAX_ALCADA][MAX_AMPLADA], const DireccioGir& gir)
+int Joc::baixaFigura()
 {
-	// gira la figura en sentit horari o antihorari dintre de la seva matriu
-
-	int nuevaMatriz[3][3];
-
-	if (gir == 0)
-	{
-
-		for (int i = 0; i < 3; ++i) {
-			for (int j = 0; j < 3; ++j) {
-				nuevaMatriz[j][2 - i] = matrizFigura[i][j];
-			}
-		}
-
-		for (int i = 0; i < 3; ++i) {
-			for (int j = 0; j < 3; ++j) {
-				matrizFigura[i][j] = nuevaMatriz[i][j];
-			}
-		}
-	}
-	else
-	{
-
-		for (int i = 0; i < 3; ++i) {
-			for (int j = 0; j < 3; ++j) {  
-				nuevaMatriz[2 - j][i] = matrizFigura[i][j];
-			}
-		}
-
-		for (int i = 0; i < 3; ++i) {
-			for (int j = 0; j < 3; ++j) {
-				matrizFigura[i][j] = nuevaMatriz[i][j];
-			}
-		}
-	}
+    Figura figuraBaixada = m_figuraActual;
+    figuraBaixada.baixarFigura();
+    if (m_tauler.movimentValid(figuraBaixada, figuraBaixada.getPosX(), figuraBaixada.getPosY()))
+    {
+        m_figuraActual = figuraBaixada; // si se puede bajar la figura, se baja
+        return 0;
+    }
+    else // si no se puede, comprobara si hay alguna fila completa
+    {
+        m_tauler.mouFigura(m_figuraActual, m_figuraActual.getPosX(), m_figuraActual.getPosY());
+        int filesEliminades = 0;
+        for (int fila = 0; fila < MAX_FILA; fila++)
+        {
+            bool filaCompleta = true;
+            for (int col = 0; col < MAX_COL; col++)
+            {
+                if (m_tauler.getColorCasella(fila, col) == NO_COLOR)
+                {
+                    filaCompleta = false;
+                    break; // se que esto se tiene que cambiar por un while, pero no es tan aestetic como un break
+                }
+            }
+            if (filaCompleta)
+            {
+                m_tauler.eliminaFila(fila); // si la fila esta completa, la elimina
+                filesEliminades++;
+            }
+        }
+        return filesEliminades;
+    }
 }
 
-void Figura::setMatrizFigura(int matrizFigura[MAX_ALCADA][MAX_AMPLADA], const int& x, const int& y)
+void Joc::escriuTauler(const string& nomFitxer)
 {
+    ofstream fitxer;
+    fitxer.open(nomFitxer);
+    if (fitxer.is_open())
+    {
+        // guarda el contenido de la figura actual
+        fitxer << static_cast<int>(m_figuraActual.getTipus()) << " ";
+        fitxer << m_figuraActual.getPosX() << " ";
+        fitxer << m_figuraActual.getPosY() << " ";
+        fitxer << m_figuraActual.getGir() << endl;
 
+        // guarda el contenido del tablero (sin contar la figura)
+        for (int i = 0; i < MAX_FILA; i++)
+        {
+            for (int j = 0; j < MAX_COL; j++)
+            {
+                ColorFigura color = m_tauler.getColorCasella(i, j);
+                
+                fitxer << static_cast<int>(color) << " ";
+            }
+            fitxer << endl;
+        }
+        fitxer.close();
+    }
 }
-
-
