@@ -56,18 +56,18 @@ private:
     int m_X; // fila actual del centro de la figura
     int m_Y; // columna actual del centro de la figura
     int m_gir; // gir actual de la figura
-    int m_forma[MAX_ALCADA][MAX_AMPLADA]; // forma de la figura
+    ColorFigura m_forma[MAX_ALCADA][MAX_AMPLADA]; // forma de la figura ES UNA MATRIZ DE COLORES
 
     //ñ Tiene que guardar esta información: tipus, fila, columna y gir
 public:
     Figura();
     Figura(const TipusFigura& fifi);
 
-    void moureFigura(const int& X, const int& Y); // mover la figura a la derecha o a la izquierda y abajo
+    void moureFigura(const int& X, const int& Y); // mover la figura a la derecha o a la izquierda
     void baixarFigura(); // mover la figura abajo por defecto
     void girarFigura(const DireccioGir& gir); // girar la figura
 
-    void getForma(int forma[MAX_ALCADA][MAX_AMPLADA]) const;
+    void getForma(ColorFigura forma[MAX_ALCADA][MAX_AMPLADA]) const;
     // ya no estoy tan seguro de que haga falta un setter de forma, así que no lo pongo por ahora
 
     TipusFigura getTipus() const { return m_tipus ; }
@@ -76,6 +76,9 @@ public:
     int getPosX() const { return m_X; }
     int getPosY() const { return m_Y; }
     int getGir() const { return m_gir; }
+    void setPosX(const int& X) { m_X = X; } // indica en que fila (dentro del tablero) se encuentra el centro de la figura
+    void setPosY(const int& Y) { m_Y = Y; } // indica en que columna (dentro del tablero) se encuentra el centro de la figura
+
 
 };
 

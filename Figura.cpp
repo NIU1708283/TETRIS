@@ -14,7 +14,7 @@ Figura::Figura() // constructor por defecto
 	{
 		for (int j = 0; j < MAX_AMPLADA; j++)
 		{
-			m_forma[i][j] = NO_FIGURA; // lo mismo a que no haya figura
+			m_forma[i][j] = NO_COLOR; // lo mismo a que no haya figura
 		}
 	}
 }
@@ -28,7 +28,7 @@ Figura::Figura(const TipusFigura& fifi) // constructor con parámetros que inicia
 	{
 		for (int j = 0; j < MAX_AMPLADA; j++)
 		{
-			m_forma[i][j] = NO_FIGURA; 
+			m_forma[i][j] = NO_COLOR; 
 		}
 	}
 	m_X = 0;
@@ -42,61 +42,61 @@ Figura::Figura(const TipusFigura& fifi) // constructor con parámetros que inicia
 	switch (fifi)
 	{
 	case FIGURA_O:
-		m_forma[0][0] = fifi; m_forma[0][1] = fifi; 
-		m_forma[1][0] = fifi; m_forma[1][1] = fifi;
+		m_forma[0][0] = COLOR_GROC; m_forma[0][1] = COLOR_GROC; 
+		m_forma[1][0] = COLOR_GROC; m_forma[1][1] = COLOR_GROC;
 		m_X = 1; // supondremos que el centro de la figura es el 1,1
 		m_Y = 1;
 		m_color = COLOR_GROC;
 		break;
 
 	case FIGURA_I:
-		m_forma[1][0] = fifi; m_forma[1][1] = fifi; m_forma[1][2] = fifi; m_forma[1][3] = fifi;
+		m_forma[1][0] = COLOR_BLAUCEL; m_forma[1][1] = COLOR_BLAUCEL; m_forma[1][2] = COLOR_BLAUCEL; m_forma[1][3] = COLOR_BLAUCEL;
 		m_X = 1;
 		m_Y = 2;
 		m_color = COLOR_BLAUCEL;
 		break;
 
 	case FIGURA_T:
-							  m_forma[0][1] = fifi;
-		m_forma[1][0] = fifi; m_forma[1][1] = fifi; m_forma[1][2] = fifi;
+									   m_forma[0][1] = COLOR_MAGENTA;
+		m_forma[1][0] = COLOR_MAGENTA; m_forma[1][1] = COLOR_MAGENTA; m_forma[1][2] = COLOR_MAGENTA;
 		m_X = 1;
 		m_Y = 1;
 		m_color = COLOR_MAGENTA;
 		break;
 
 	case FIGURA_L:
-													m_forma[0][2] = fifi;
-		m_forma[1][0] = fifi; m_forma[1][1] = fifi; m_forma[1][2] = fifi;
+																	  m_forma[0][2] = COLOR_TARONJA;
+		m_forma[1][0] = COLOR_TARONJA; m_forma[1][1] = COLOR_TARONJA; m_forma[1][2] = COLOR_TARONJA;
 		m_X = 1;
 		m_Y = 1;
 		m_color = COLOR_TARONJA;
 		break;
 
 	case FIGURA_J:
-		m_forma[0][0] = fifi;
-		m_forma[1][0] = fifi; m_forma[1][1] = fifi; m_forma[1][2] = fifi;
+		m_forma[0][0] = COLOR_BLAUFOSC;
+		m_forma[1][0] = COLOR_BLAUFOSC; m_forma[1][1] = COLOR_BLAUFOSC; m_forma[1][2] = COLOR_BLAUFOSC;
 		m_X = 1;
 		m_Y = 1;
 		m_color = COLOR_BLAUFOSC;
 		break;
 
 	case FIGURA_Z:
-		m_forma[0][0] = fifi; m_forma[0][1] = fifi;
-							  m_forma[1][1] = fifi; m_forma[1][2] = fifi;
+		m_forma[0][0] = COLOR_VERMELL; m_forma[0][1] = COLOR_VERMELL;
+									   m_forma[1][1] = COLOR_VERMELL; m_forma[1][2] = COLOR_VERMELL;
 		m_X = 1;
 		m_Y = 1;
 		m_color = COLOR_VERMELL;
 		break;
 
 	case FIGURA_S:
-							  m_forma[0][1] = fifi; m_forma[0][2] = fifi;
-		m_forma[0][1] = fifi; m_forma[1][1] = fifi;
+									m_forma[0][1] = COLOR_VERD; m_forma[0][2] = COLOR_VERD;
+		m_forma[0][1] = COLOR_VERD; m_forma[1][1] = COLOR_VERD;
 		m_X = 1;
 		m_Y = 1;
 		m_color = COLOR_VERD;
 		break;
 
-	default: //ñ  NO_FIGURA
+	default: //ñ  NO_COLOR
 		break;
 	}
 }
@@ -117,9 +117,8 @@ void Figura::baixarFigura()
 // gira cualquier figura en sentido horario o antihorario
 void Figura::girarFigura(const DireccioGir& gir)
 {
-	
 
-	int novaForma[MAX_ALCADA][MAX_AMPLADA];
+	ColorFigura novaForma[MAX_ALCADA][MAX_AMPLADA]; // matriz auxiliar para guardar la nueva forma de la figura
 	if (m_tipus != FIGURA_O) // la figura O no se puede girar
 	{
 		// para la figura 4x4
@@ -153,8 +152,7 @@ void Figura::girarFigura(const DireccioGir& gir)
 					}
 				}
 			}
-			// actualiza el centro de la figura y luego
-			// usa el metodo moureFigura para colocar la figura en la posición correcta
+			//ñ tiene que actualizar el centro de la figura COMO ESTA AHORA MISMO ESTA MAL
 			if (m_gir == 0)
 				m_X = 1; m_Y = 2;
 			if (m_gir == 1)
@@ -229,7 +227,7 @@ void Figura::girarFigura(const DireccioGir& gir)
 }
 
 // recupera la forma de la figura en cualquier momento
-void Figura::getForma(int forma[MAX_ALCADA][MAX_AMPLADA]) const
+void Figura::getForma(ColorFigura forma[MAX_ALCADA][MAX_AMPLADA]) const
 {
 	for (int i = 0; i < MAX_ALCADA; i++)
 	{

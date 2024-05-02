@@ -13,6 +13,7 @@ Tauler::Tauler()
     }
 }
 
+
 // inicializa el tablero con todos los valores a NO_COLOR
 void Tauler::inicialitzaTauler()
 {
@@ -25,13 +26,14 @@ void Tauler::inicialitzaTauler()
     }
 }
 
+
 // comprueba si cualquier figura puede moverse a la posición indicada (casilla de referencia)
 bool Tauler::movimentValid(const Figura& figura, int fila, int col) const // solo tiene que comprobar que la figura se puede mover
 {
     //ñ fila y col deben ser las coordenadas del centro de la figura en el tablero
 
     int filaFig, colFig; // espacios del tablero
-    int forma[MAX_ALCADA][MAX_AMPLADA]; 
+    ColorFigura forma[MAX_ALCADA][MAX_AMPLADA]; 
     figura.getForma(forma); // forma de la figura guardada en una variable auxiliar
 
     // se debe separar en 2 casos: figura 3x3 (la figura 2x2 tiene el mismo centro) y figura 4x4
@@ -136,12 +138,14 @@ bool Tauler::movimentValid(const Figura& figura, int fila, int col) const // sol
     }
 }
 
-// mueve la figura a la posición indicada (casilla de referencia)
-void Tauler::mouFigura(const Figura& figura, const int& fila, const int& col)
+
+// pone la figura en la posición indicada (casilla de referencia)
+void Tauler::setFigura(const Figura& figura, const int& fila, const int& col)
 {
-    int forma[MAX_ALCADA][MAX_AMPLADA];
+    ColorFigura forma[MAX_ALCADA][MAX_AMPLADA];
     figura.getForma(forma); // forma de la figura guardada en una variable auxiliar
 
+    eliminaFigura(figura); // primero se elimina la figura del tablero
     if (figura.getTipus() != FIGURA_I) // si la figura es 3x3 o menor
     {
         for (int i = 0; i < MAX_ALCADA - 1; i++) // el -1 es pq es una figura 3x3
@@ -210,7 +214,70 @@ void Tauler::mouFigura(const Figura& figura, const int& fila, const int& col)
             }
 		}
     }
+
 }
+
+
+// elimina la figura del tablero para poder dibujarla en otra posición
+void Tauler::eliminaFigura(const Figura& figura)
+{
+    ColorFigura forma[MAX_ALCADA][MAX_AMPLADA];
+	figura.getForma(forma); // forma de la figura guardada en una variable auxiliar
+
+    if (figura.getTipus() != FIGURA_I) // si la figura es 3x3 o menor
+    {
+        for (int i = 0; i < MAX_ALCADA - 1; i++) // el -1 es pq es una figura 3x3
+        {
+            for (int j = 0; j < MAX_AMPLADA - 1; j++)
+            {
+                if (forma[i][j] != NO_COLOR)
+                {
+					m_tauler[figura.getPosX() - 1 + i][figura.getPosY() - 1 + j] = NO_COLOR; // se coloca el color del bloque i,j en el tablero
+				}
+			}
+		}
+	}
+    else // si la figura es 4x4
+    {
+        if (figura.getGir() == 0)
+        {
+            for (int i = 0; i < MAX_ALCADA; i++)
+            {
+                for (int j = 0; j < MAX_AMPLADA; j++)
+                {
+                    if (forma[i][j] != NO_COLOR)
+                    {
+						m_tauler[figura.getPosX() - 1 + i][figura.getPosY() - 2 + j] = NO_COLOR; // se coloca el color del bloque i,j en el tablero
+					}
+				}
+			}
+		}
+        if (figura.getGir() == 1)
+        {
+            for (int i = 0; i < MAX_ALCADA; i++)
+            {
+                for (int j = 0; j < MAX_AMPLADA; j++)
+                {
+                    if (forma[i][j] != NO_COLOR)
+                    {
+						m_tauler[figura.getPosX() - 2 + i][figura.getPosY() - 2 + j] = NO_COLOR; // se coloca el color del bloque i,j en el tablero
+					}
+				}
+			}
+		}
+        if (figura.getGir() == 2)
+        {
+            for (int i = 0; i < MAX_ALCADA; i++)
+            {
+                for (int j = 0; j < MAX_AMPLADA; j++)
+                {
+
+                }
+            }
+        }
+    }
+}
+
 
 // elimina UNA UNICA fila del tablero, desplazando las filas superiores hacia abajo y poniendo la fila superior a NO_COLOR
 void Tauler::eliminaFila(const int& fila)

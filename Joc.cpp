@@ -19,7 +19,7 @@ void Joc::inicialitza(const string& nomFitxer)
             }
 
             m_tauler.inicialitzaTauler(); // inicializa el tablero todo a NO_COLOR
-            m_tauler.mouFigura(m_figuraActual, fila, columna); // mueve la figura a su posición correspondiente
+            m_tauler.setFigura(m_figuraActual, fila, columna); // mueve la figura a su posición correspondiente
 
             for (int i = 0; i < MAX_FILA; i++)
             {
@@ -49,13 +49,14 @@ bool Joc::giraFigura(DireccioGir direccio)
         return true;
     }
     return false;
+    
 }
 
 bool Joc::mouFigura(int dirX) // vale 1 si se mueve a la derecha y -1 si se mueve a la izquierda
 {
     Figura figuraMoguda = m_figuraActual;
 
-    m_tauler.mouFigura(figuraMoguda, 0, figuraMoguda.getPosY() + dirX);
+    m_tauler.setFigura(figuraMoguda, 0, figuraMoguda.getPosY() + dirX);
     if (m_tauler.movimentValid(figuraMoguda, figuraMoguda.getPosX(), figuraMoguda.getPosY()))
     {
         m_figuraActual = figuraMoguda;
@@ -123,4 +124,5 @@ void Joc::escriuTauler(const string& nomFitxer)
         }
         fitxer.close();
     }
+    
 }
