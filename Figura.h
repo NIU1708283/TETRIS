@@ -22,7 +22,7 @@ typedef enum
     COLOR_BLAUFOSC,
     COLOR_VERMELL,
     COLOR_VERD,
-    NO_COLOR
+    NO_COLOR,
 } ColorFigura;
 
 
@@ -53,8 +53,8 @@ private:
     ColorFigura m_color; // color de la figura
     TipusFigura m_tipus; // tipus de la figura
     
-    int m_X; // fila actual del centro de la figura
-    int m_Y; // columna actual del centro de la figura
+    int m_fila; // fila actual del centro de la figura
+    int m_col; // columna actual del centro de la figura
     int m_gir; // gir actual de la figura
     ColorFigura m_forma[MAX_ALCADA][MAX_AMPLADA]; // forma de la figura ES UNA MATRIZ DE COLORES
 
@@ -68,16 +68,18 @@ public:
     void girarFigura(const DireccioGir& gir); // girar la figura
 
     void getForma(ColorFigura forma[MAX_ALCADA][MAX_AMPLADA]) const;
-    // ya no estoy tan seguro de que haga falta un setter de forma, así que no lo pongo por ahora
 
     TipusFigura getTipus() const { return m_tipus ; }
     ColorFigura getColor() const { return m_color; }
     ColorFigura setColor(const ColorFigura& color) { m_color = color; }
-    int getPosX() const { return m_X; }
-    int getPosY() const { return m_Y; }
+
+    int getFila() const { return m_fila; }
+    int getCol() const { return m_col; }
+
+    void setFila(const int& fila) { m_fila = fila; } 
+    void setCol(const int& col) { m_col = col; } 
+
     int getGir() const { return m_gir; }
-    void setPosX(const int& X) { m_X = X; } // indica en que fila (dentro del tablero) se encuentra el centro de la figura
-    void setPosY(const int& Y) { m_Y = Y; } // indica en que columna (dentro del tablero) se encuentra el centro de la figura
 
 
 };

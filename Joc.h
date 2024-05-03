@@ -17,8 +17,7 @@ public:
 private:
 	Tauler m_tauler;
 	Figura m_figuraActual;
-	int m_puntuacio;
-	int m_nivell;
+	
 };
 
 #endif
