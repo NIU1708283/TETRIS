@@ -1,7 +1,18 @@
 #include "Tauler.h"
 #include <fstream>
 
-// inicializa el tablero con todos los valores a NO_COLOR
+
+// comprueba si la posicon de la casilla es correcta/valida
+bool Tauler::casellaCorrecta(const Casella& pos) const
+{
+    //verifica si la posición esta dentro del tablero y si esta ocupada (el color no es 0 (negro))
+    if (pos.fila < 0 || pos.fila >= MAX_FILA || pos.columna < 0 || pos.columna >= MAX_COL || m_tauler[pos.fila][pos.columna] != COLOR_NEGRE)
+        return false;
+
+    return true;
+}
+
+// inicializa el tablero con todos los valores a COLOR_NEGRE
 Tauler::Tauler()
 {
     for (int i = 0; i < MAX_FILA; i++)
@@ -11,312 +22,123 @@ Tauler::Tauler()
             m_tauler[i][j] = COLOR_NEGRE;
         }
     }
-    m_fila = 0;
-    m_col = 0;
 }
 
-
-// inicializa el tablero con todos los valores a NO_COLOR
-void Tauler::inicialitzaTauler()
+// inicializa el tablero con los valores del tablero que se pasa por parámetro
+void Tauler::inicialitzaTauler(ColorFigura tauler[MAX_FILA][MAX_COL])
 {
     for (int i = 0; i < MAX_FILA; i++)
     {
         for (int j = 0; j < MAX_COL; j++)
         {
-            m_tauler[i][j] = COLOR_NEGRE;
+            m_tauler[i][j] = tauler[i][j];
         }
     }
-    m_fila = 0;
-    m_col = 0;
 }
-
 
 // comprueba si cualquier figura puede moverse a la posición indicada (casilla de referencia)
-bool Tauler::movimentValid(const Figura& figura, const int& fila, const int& col) const // solo tiene que comprobar que la figura se puede mover
+bool Tauler::movimentValid(const Figura& figura, const Casella& pos) const
 {
-    /// fila y col deben ser las coordenadas del centro de la figura en el tablero
-    /// se da por hecho que ya se ha eliminado la figura del tablero
- 
+    // se presupone que se ha eliminado la figura del tablero 
 
-    int filaFig, colFig; // espacios en el tablero
-    ColorFigura forma[MAX_ALCADA][MAX_AMPLADA]; 
-    figura.getForma(forma); // forma de la figura guardada en una variable auxiliar
+    bool valid = true;
 
-    // se debe separar en 2 casos: figura 3x3 (la figura 2x2 tiene el mismo centro) y figura 4x4
-
-    if (figura.getTipus() != FIGURA_I)
+    int i = 0;
+    while (i < figura.getMida() && valid)
     {
-        for (int i = 0; i < MAX_ALCADA-1; i++) // el -1 es pq es una figura 3x3
+        int j = 0;
+        while (j < figura.getMida() && valid)
         {
-            for (int j = 0; j < MAX_AMPLADA-1; j++) // el -1 es pq es una figura 3x3
+            if (figura.getForma(i, j) != NO_COLOR) // si la figura tiene color
             {
-                filaFig = (fila - 1) + i; // espacio que ocupa la figura dentro del tablero
-                colFig = (col - 1) + j; // se coloca un "-1" pq el centro de la figura es el 1,1 y queremos mirar a partir de la posición 0,0
-                if (forma[i][j] != COLOR_NEGRE && NO_COLOR) // si la figura tiene color y no es negra (ahorramos un poco de tiempo)
-                {
-                    if (filaFig < 0 || filaFig >= MAX_FILA || colFig < 0 || colFig >= MAX_COL || m_tauler[filaFig][colFig] != COLOR_NEGRE)
-                    {
-                        return false;
-                    }
-                }
+                //se calcula la posición temporal de la celda actual
+                Casella temp;
+                temp.fila = pos.fila + i;
+                temp.columna = pos.columna + j;
+
+                //verifica si la posición es correcta/valida
+                valid = casellaCorrecta(temp);
             }
+            j++;
         }
-        return true;
+        i++;
     }
-    else // figura 4x4
-    {
-        if (figura.getGir() == 0)
-        {
-            for (int i = 0; i < MAX_ALCADA; i++)
-            {
-                for (int j = 0; j < MAX_AMPLADA; j++)
-                {
-                    filaFig = (fila - 1) + i; // espacio que ocupa la figura dentro del tablero
-                    colFig = (col - 2) + j; // se coloca un "-2" pq el centro de la figura es el 1,2 y queremos mirar a partir de la posición 0,0
-                    if (forma[i][j] != COLOR_NEGRE && NO_COLOR) // si la figura tiene color (no es un 0)
-                    {
-                        if (filaFig < 0 || filaFig >= MAX_FILA || colFig < 0 || colFig >= MAX_COL || m_tauler[filaFig][colFig] != COLOR_NEGRE)
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-            return true;
-        }
-        if (figura.getGir() == 1)
-		{
-            for (int i = 0; i < MAX_ALCADA; i++)
-            {
-                for (int j = 0; j < MAX_AMPLADA; j++)
-                {
-                    filaFig = (fila - 2) + i; // espacio que ocupa la figura dentro del tablero
-                    colFig = (col - 2) + j; // se coloca un "-2" pq el centro de la figura es el 2,2 y queremos mirar a partir de la posición 0,0
-                    if (forma[i][j] != COLOR_NEGRE && NO_COLOR) // si la figura tiene color (no es un 0)
-                    {
-                        if (filaFig < 0 || filaFig >= MAX_FILA || colFig < 0 || colFig >= MAX_COL || m_tauler[filaFig][colFig] != COLOR_NEGRE)
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-            return true;
-		}
-		if (figura.getGir() == 2)
-		{
-            for (int i = 0; i < MAX_ALCADA; i++)
-            {
-                for (int j = 0; j < MAX_AMPLADA; j++)
-                {
-                    filaFig = (fila - 2) + i; // espacio que ocupa la figura dentro del tablero
-                    colFig = (col - 1) + j; // se coloca un "-1" pq el centro de la figura es el 2,1 y queremos mirar a partir de la posición 0,0
-                    if (forma[i][j] != COLOR_NEGRE && NO_COLOR) // si la figura tiene color (no es un 0)
-                    {
-                        if (filaFig < 0 || filaFig >= MAX_FILA || colFig < 0 || colFig >= MAX_COL || m_tauler[filaFig][colFig] != COLOR_NEGRE)
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-            return true;
-		}
-		if (figura.getGir() == 3)
-		{
-            for (int i = 0; i < MAX_ALCADA; i++)
-            {
-                for (int j = 0; j < MAX_AMPLADA; j++)
-                {
-                    filaFig = (fila - 1) + i; // espacio que ocupa la figura dentro del tablero
-                    colFig = (col - 1) + j; // se coloca un "-1" pq el centro de la figura es el 1,1 y queremos mirar a partir de la posición 0,0
-                    if (forma[i][j] != COLOR_NEGRE && NO_COLOR) // si la figura tiene color (no es un 0)
-                    {
-                        if (filaFig < 0 || filaFig >= MAX_FILA || colFig < 0 || colFig >= MAX_COL || m_tauler[filaFig][colFig] != COLOR_NEGRE)
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-            return true;
-		}
-    }
+    return valid;
 }
-
 
 // elimina la figura del tablero para poder dibujarla en otra posición
-void Tauler::eliminaFigura(const Figura& figura, const int& fila, const int& col)
+void Tauler::eliminaFigura(const Figura& figura, const Casella& pos)
 {
-    ColorFigura forma[MAX_ALCADA][MAX_AMPLADA];
-    figura.getForma(forma); // forma de la figura guardada en una variable auxiliar
-
-    if (figura.getTipus() != FIGURA_I) // si la figura es 3x3 o menor
+    // pinta de negro las casillas de la figura
+    for (int i = 0; i < figura.getMida(); i++)
     {
-        for (int i = 0; i < MAX_ALCADA - 1; i++) // el -1 es pq es una figura 3x3
+        for (int j = 0; j < figura.getMida(); j++)
         {
-            for (int j = 0; j < MAX_AMPLADA - 1; j++)
+            if (figura.getForma(i, j) != NO_COLOR)
             {
-                if (forma[i][j] != COLOR_NEGRE && NO_COLOR)
-                {
-                    m_tauler[fila - 1 + i][col - 1 + j] = COLOR_NEGRE; // se coloca el color del bloque i,j en el tablero
-                }
-            }
-        }
-    }
-    else // si la figura es 4x4
-    {
-        if (figura.getGir() == 0)
-        {
-            for (int i = 0; i < MAX_ALCADA; i++)
-            {
-                for (int j = 0; j < MAX_AMPLADA; j++)
-                {
-                    if (forma[i][j] != COLOR_NEGRE && NO_COLOR)
-                    {
-                        m_tauler[fila - 1 + i][col - 2 + j] = COLOR_NEGRE; // se coloca el color del bloque i,j en el tablero
-                    }
-                }
-            }
-        }
-        if (figura.getGir() == 1)
-        {
-            for (int i = 0; i < MAX_ALCADA; i++)
-            {
-                for (int j = 0; j < MAX_AMPLADA; j++)
-                {
-                    if (forma[i][j] != COLOR_NEGRE && NO_COLOR)
-                    {
-                        m_tauler[fila - 2 + i][col - 2 + j] = COLOR_NEGRE; // se coloca el color del bloque i,j en el tablero
-                    }
-                }
-            }
-        }
-        if (figura.getGir() == 2)
-        {
-            for (int i = 0; i < MAX_ALCADA; i++)
-            {
-                for (int j = 0; j < MAX_AMPLADA; j++)
-                {
-                    if (forma[i][j] != COLOR_NEGRE && NO_COLOR)
-                    {
-                        m_tauler[fila - 2 + i][col - 1 + j] = COLOR_NEGRE; // se coloca el color del bloque i,j en el tablero
-                    }
-                }
-            }
-        }
-        if (figura.getGir() == 3)
-        {
-            for (int i = 0; i < MAX_ALCADA; i++)
-            {
-                for (int j = 0; j < MAX_AMPLADA; j++)
-                {
-                    if (forma[i][j] != COLOR_NEGRE && NO_COLOR)
-                    {
-                        m_tauler[fila - 1 + i][col - 1 + j] = COLOR_NEGRE; // se coloca el color del bloque i,j en el tablero
-                    }
-                }
+                m_tauler[pos.fila + i][pos.columna + j] = COLOR_NEGRE;
             }
         }
     }
 }
-
 
 // pone la figura en la posición indicada (casilla de referencia)
-void Tauler::setFigura(const Figura& figura, const int& fila, const int& col)
+void Tauler::setFigura(Figura figura, const Casella& pos) // figura no puede ser una constante pq se actualiza
 {
-    /// suponemos que la figura ya ha sido eliminada del tablero y que la posición es válida
-    setFila(fila);
-    setCol(col);
+    // se presupone que la posicion es válida
 
-    ColorFigura forma[MAX_ALCADA][MAX_AMPLADA];
-    figura.getForma(forma); // forma de la figura guardada en una variable auxiliar
-
-
-    if (figura.getTipus() != FIGURA_I) // si la figura es 3x3 o menor
-    {
-        for (int i = 0; i < MAX_ALCADA - 1; i++) // el -1 es pq es una figura 3x3
+    for (int i = 0; i < figura.getMida(); i++)
+        for (int j = 0; j < figura.getMida(); j++)
         {
-            for (int j = 0; j < MAX_AMPLADA - 1; j++)
+            //dibuja la figura en cada casilla correspondiente
+            if (figura.getForma(i, j) != NO_COLOR)
             {
-                if (forma[i][j] != COLOR_NEGRE)
-                {
-                    m_tauler[fila - 1 + i][col - 1 + j] = figura.getColor(); // se coloca el color del bloque i,j en el tablero
-                }
+                m_tauler[pos.fila + i][pos.columna + j] = figura.getColor();
             }
         }
-    }
-    else // si la figura es 4x4
-    {
-        if (figura.getGir() == 0)
-        {
-            for (int i = 0; i < MAX_ALCADA; i++)
-            {
-                for (int j = 0; j < MAX_AMPLADA; j++)
-                {
-                    if (forma[i][j] != COLOR_NEGRE)
-                    {
-                        m_tauler[fila - 1 + i][col - 2 + j] = figura.getColor(); // se coloca el color del bloque i,j en el tablero
-                    }
-                }
-            }
-        }
-        if (figura.getGir() == 1)
-		{
-            for (int i = 0; i < MAX_ALCADA; i++)
-            {
-                for (int j = 0; j < MAX_AMPLADA; j++)
-                {
-                    if (forma[i][j] != COLOR_NEGRE)
-                    {
-                        m_tauler[fila - 2 + i][col - 2 + j] = figura.getColor(); // se coloca el color del bloque i,j en el tablero
-                    }
-                }
-            }
-		}
-        if (figura.getGir() == 2)
-        {
-            for (int i = 0; i < MAX_ALCADA; i++)
-            {
-                for (int j = 0; j < MAX_AMPLADA; j++)
-                {
-                    if (forma[i][j] != COLOR_NEGRE)
-                    {
-                        m_tauler[fila - 2 + i][col - 1 + j] = figura.getColor(); // se coloca el color del bloque i,j en el tablero
-                    }
-                }
-            }
-        }
-        if (figura.getGir() == 3)
-		{
-            for (int i = 0; i < MAX_ALCADA; i++)
-            {
-                for (int j = 0; j < MAX_AMPLADA; j++)
-                {
-                    if (forma[i][j] != COLOR_NEGRE)
-                    {
-                        m_tauler[fila - 1 + i][col - 1 + j] = figura.getColor(); // se coloca el color del bloque i,j en el tablero
-                    }
-                }
-            }
-		}
-    }
-
+    //actualitza la posicion de la figura
+    figura.setCasella(pos);
 }
 
-
-// elimina UNA UNICA fila del tablero, desplazando las filas superiores hacia abajo y poniendo la fila superior a NO_COLOR
-void Tauler::eliminaFila(const int& fila)
+// elimina filas del tablero, desplazando las filas superiores hacia abajo y poniendo la fila superior a NO_COLOR
+int Tauler::eliminaFilas()
 {
-    for (int f = fila; f > 0; f--)
+    int nFiles = 0; // nombre de filas eliminadas/completadas
+
+    // Comprovar totes les files i buscar las filas completadas
+    for (int i = 0; i < MAX_FILA; ++i)
     {
-        for (int j = 0; j < MAX_COL; j++)
+        bool completa = true;
+        int j = 0;
+
+        while (j < MAX_COL&& completa)
         {
-            m_tauler[f][j] = m_tauler[f - 1][j];
+            //compruebba si la fila esta completa
+            if (m_tauler[i][j] == 0) 
+            {
+                completa = false;
+            }
+            j++;
         }
+
+        //si esta completa, baja un nivel todas las filas superiores y añade una fila negra en la fila 0
+        if (completa)
+        {
+            nFiles++;
+            for (int f = i; f > 0; f--)
+            {
+                for (int c = 0; c < MAX_COL; c++)
+                {
+                    m_tauler[f][c] = m_tauler[f - 1][c];
+                }
+            }
+            for (int c = 0; c < MAX_COL; c++)
+            {
+                m_tauler[0][c] = COLOR_NEGRE;
+            }
+        }
+
     }
-    for (int j = 0; j < MAX_COL; j++)
-    {
-        m_tauler[0][j] = COLOR_NEGRE;
-    }
+    return nFiles;
 }
+

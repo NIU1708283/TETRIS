@@ -25,7 +25,6 @@ typedef enum
     NO_COLOR,
 } ColorFigura;
 
-
 typedef enum
 {
     NO_FIGURA = 0,
@@ -47,39 +46,39 @@ typedef enum
     GIR_ANTI_HORARI
 } DireccioGir;
 
+typedef struct
+{
+    int fila;
+    int columna;
+} Casella;
+
 class Figura
 {
 private:
     ColorFigura m_color; // color de la figura
     TipusFigura m_tipus; // tipus de la figura
-    
-    int m_fila; // fila actual del centro de la figura
-    int m_col; // columna actual del centro de la figura
-    int m_gir; // gir actual de la figura
     ColorFigura m_forma[MAX_ALCADA][MAX_AMPLADA]; // forma de la figura ES UNA MATRIZ DE COLORES
 
-    //ñ Tiene que guardar esta información: tipus, fila, columna y gir
+    int m_mida; // mida de la figura 2x2, 3x3, 4x4
+    Casella m_casella; // fila y columna del centro de la figura
+
+    // Tiene que guardar esta información: tipus, fila, columna y gir
 public:
     Figura();
     Figura(const TipusFigura& fifi);
 
-    void moureFigura(const int& X, const int& Y); // mover la figura a la derecha o a la izquierda
-    void baixarFigura(); // mover la figura abajo por defecto
+
+    void inicialitzaFigura(const TipusFigura& fifi); // inicializa la figura
+    void moureFigura(const int& Y); // mover la figura a la derecha o a la izquierda
+    void baixarFigura(const int& X); // mover la figura abajo por defecto
     void girarFigura(const DireccioGir& gir); // girar la figura
 
-    void getForma(ColorFigura forma[MAX_ALCADA][MAX_AMPLADA]) const;
 
-    TipusFigura getTipus() const { return m_tipus ; }
+    ColorFigura getForma(const int& fila, const int& col) const { return m_forma[fila][col]; }
     ColorFigura getColor() const { return m_color; }
-    ColorFigura setColor(const ColorFigura& color) { m_color = color; }
-
-    int getFila() const { return m_fila; }
-    int getCol() const { return m_col; }
-
-    void setFila(const int& fila) { m_fila = fila; } 
-    void setCol(const int& col) { m_col = col; } 
-
-    int getGir() const { return m_gir; }
+    Casella getCasella() const { return m_casella; }
+    void setCasella(const Casella& casella) { m_casella = casella; }
+    int getMida() const { return m_mida; }
 
 
 };
