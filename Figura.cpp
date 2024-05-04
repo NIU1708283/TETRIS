@@ -67,19 +67,17 @@ Figura::Figura(const TipusFigura& fifi) // constructor con parámetros que inicia
 		break;
 
 	case FIGURA_L:
-		m_forma[0][1] = COLOR_TARONJA;
-		m_forma[1][1] = COLOR_TARONJA; 
-		m_forma[2][1] = COLOR_TARONJA; m_forma[2][2] = COLOR_TARONJA;
-		
+																	  m_forma[0][2] = COLOR_TARONJA;
+		m_forma[1][0] = COLOR_TARONJA; m_forma[1][1] = COLOR_TARONJA; m_forma[1][2] = COLOR_TARONJA;
+
 		m_mida = 3;
 		m_color = COLOR_TARONJA;
 		break;
 
 	case FIGURA_J:
-										m_forma[0][1] = COLOR_BLAUFOSC;
-										m_forma[1][1] = COLOR_BLAUFOSC; 
-		m_forma[2][0] = COLOR_BLAUFOSC; m_forma[2][1] = COLOR_BLAUFOSC;
-		
+		m_forma[0][0] = COLOR_BLAUFOSC;
+		m_forma[1][0] = COLOR_BLAUFOSC; m_forma[1][1] = COLOR_BLAUFOSC; m_forma[1][2] = COLOR_BLAUFOSC;
+
 		m_mida = 3;
 		m_color = COLOR_BLAUFOSC;
 		break;
@@ -152,18 +150,16 @@ void Figura::inicialitzaFigura(const TipusFigura& fifi)
 		break;
 
 	case FIGURA_L:
-		m_forma[0][1] = COLOR_TARONJA;
-		m_forma[1][1] = COLOR_TARONJA;
-		m_forma[2][1] = COLOR_TARONJA; m_forma[2][2] = COLOR_TARONJA;
+																	  m_forma[0][2] = COLOR_TARONJA;
+		m_forma[1][0] = COLOR_TARONJA; m_forma[1][1] = COLOR_TARONJA; m_forma[1][2] = COLOR_TARONJA;
 
 		m_mida = 3;
 		m_color = COLOR_TARONJA;
 		break;
 
 	case FIGURA_J:
-		m_forma[0][1] = COLOR_BLAUFOSC;
-		m_forma[1][1] = COLOR_BLAUFOSC;
-		m_forma[2][0] = COLOR_BLAUFOSC; m_forma[2][1] = COLOR_BLAUFOSC;
+		m_forma[0][0] = COLOR_BLAUFOSC;
+		m_forma[1][0] = COLOR_BLAUFOSC; m_forma[1][1] = COLOR_BLAUFOSC; m_forma[1][2] = COLOR_BLAUFOSC;
 
 		m_mida = 3;
 		m_color = COLOR_BLAUFOSC;
@@ -194,16 +190,16 @@ void Figura::inicialitzaFigura(const TipusFigura& fifi)
 void Figura::moureFigura(const int& Y) // mueve el centro de la figura
 {
 	if (Y == -1)
-		m_casella.columna--;
+		m_casella.columna--; // desplaza izquierda
 	else
-		m_casella.columna++; // desplaza izquierda o derecha
+		m_casella.columna++; // desplaza derecha
 }
 
 // baja por defecto la figura una posición
 void Figura::baixarFigura(const int& X) // X será 1 mas o menos por defecto
 {
 	if (X == -1)
-		m_casella.fila--;
+		m_casella.fila--; // la devuelve a su posición si no se puede bajar
 	else
 		m_casella.fila++; // baja la figura una posición
 }
